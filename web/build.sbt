@@ -1,4 +1,4 @@
-name := """crossword"""
+name := """web"""
 
 version := "1.0-SNAPSHOT"
 
