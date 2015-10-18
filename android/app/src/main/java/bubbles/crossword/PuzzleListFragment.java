@@ -12,9 +12,9 @@ import android.view.ViewGroup;
  */
 public class PuzzleListFragment extends Fragment{
 
-    private static String EXTRA_PUZZLE_ID = "extra_puzzle_id";
+    public static String EXTRA_PUZZLE_ID = "extra_puzzle_id";
     //TODO: unFake this.
-    private static String FAKE_PUZZLE_ID = "puzzle_one";
+    private static String FAKE_PUZZLE_URL = "https://github.com/alexdej/puzpy/raw/master/testfiles/av110622.puz";
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -25,7 +25,7 @@ public class PuzzleListFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PuzzleActivity.class);
-                intent.putExtra(EXTRA_PUZZLE_ID, FAKE_PUZZLE_ID);
+                intent.putExtra(EXTRA_PUZZLE_ID, FAKE_PUZZLE_URL);
                 startActivity(intent);
             }
         });
