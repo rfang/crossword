@@ -3,11 +3,8 @@ package app;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +19,8 @@ public class Puzzle {
     public final ArrayList<String> clues = new ArrayList<>();
     public String line;
 
-    public Puzzle() {
-        load();
+    public Puzzle(URL url) {
+        load(url);
         line = line.substring(line.indexOf("ACROSS&DOWN") - 2);
         width = line.charAt(44);
         height = line.charAt(45);
@@ -43,16 +40,11 @@ public class Puzzle {
         }
     }
 
-    private void load() {
+    private void load(URL url) {
         Charset charset = Charset.forName("ISO-8859-1");
-        URL url = null;
-        try {
-            url = new URL("https://github.com/alexdej/puzpy/raw/master/testfiles/nyt_partlyfilled.puz");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), charset))) {
             line = reader.readLine();
+            System.err.format("%s\n", line);
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
