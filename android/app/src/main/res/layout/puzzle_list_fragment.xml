@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/puzzle_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:gravity="center"
+        android:paddingLeft="@dimen/list_item_x_padding"
+        android:paddingRight="@dimen/list_item_x_padding"
+        android:text="puzzle1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:gravity="center"
+        android:paddingLeft="@dimen/list_item_x_padding"
+        android:paddingRight="@dimen/list_item_x_padding"
+        android:text="puzzle2"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:gravity="center"
+        android:paddingLeft="@dimen/list_item_x_padding"
+        android:paddingRight="@dimen/list_item_x_padding"
+        android:text="puzzle3"/>
+</LinearLayout>
