@@ -14,20 +14,19 @@ import java.util.ArrayList;
 @Entity
 public class Crossword extends Model {
 
-    @Id
-    public Long id;
-
+    public static Finder<Long, Crossword> find = new Finder<>(Crossword.class);
     public final String url;
     public final char width;
     public final char height;
     public final String solution;
     public final String fill;
     public final ArrayList<String> clues = new ArrayList<>();
-    public String line;
+    @Id
+    public Long id;
 
     public Crossword(String url) {
         this.url = url;
-        load();
+        String line = load();
         line = line.substring(line.indexOf("ACROSS&DOWN") - 2);
         width = line.charAt(44);
         height = line.charAt(45);
@@ -47,14 +46,14 @@ public class Crossword extends Model {
         }
     }
 
-    private void load() {
+    private String load() {
         Charset charset = Charset.forName("ISO-8859-1");
+        String line = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), charset))) {
             line = reader.readLine();
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
+        return line;
     }
-
-    public static Finder<Long, Crossword> find = new Finder<>(Crossword.class);
 }
