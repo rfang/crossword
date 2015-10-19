@@ -1,5 +1,9 @@
-package app;
+package models;
 
+import com.avaje.ebean.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,11 +11,13 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-/**
- * Created by Bryan on 10/18/2015.
- */
-public class Puzzle {
+@Entity
+public class Crossword extends Model {
 
+    @Id
+    public Long id;
+
+    public final String url;
     public final char width;
     public final char height;
     public final String solution;
@@ -19,8 +25,9 @@ public class Puzzle {
     public final ArrayList<String> clues = new ArrayList<>();
     public String line;
 
-    public Puzzle(URL url) {
-        load(url);
+    public Crossword(String url) {
+        this.url = url;
+        load();
         line = line.substring(line.indexOf("ACROSS&DOWN") - 2);
         width = line.charAt(44);
         height = line.charAt(45);
@@ -40,13 +47,14 @@ public class Puzzle {
         }
     }
 
-    private void load(URL url) {
+    private void load() {
         Charset charset = Charset.forName("ISO-8859-1");
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), charset))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(url).openStream(), charset))) {
             line = reader.readLine();
-            System.err.format("%s\n", line);
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
         }
     }
+
+    public static Finder<Long, Crossword> find = new Finder<>(Crossword.class);
 }

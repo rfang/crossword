@@ -1,34 +1,18 @@
 package controllers;
 
-import app.Puzzle;
-import play.*;
+import models.Crossword;
 import play.libs.Json;
-import play.mvc.*;
-
-import views.html.*;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 public class Application extends Controller {
 
     public Result index(String url) {
-        Puzzle puzzle = null;
-        try {
-            puzzle = new Puzzle(new URL(url));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        if (Crossword.find.where().eq("url", url).findList().size() == 0) {
+            Crossword crossword = new Crossword(url);
+            crossword.save();
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("line", puzzle.line);
-        map.put("width", puzzle.width);
-        map.put("height", puzzle.height);
-        map.put("solution", puzzle.solution);
-        map.put("fill", puzzle.fill);
-        map.put("clues", puzzle.clues);
-        return ok(Json.toJson(map));
+        return ok(Json.toJson(Crossword.find.all()));
     }
 
 }
