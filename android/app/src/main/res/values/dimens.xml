@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
     <dimen name="list_item_x_padding">16dp</dimen>
+    <dimen name="puzzle_grid_height">315dp</dimen>
+    <dimen name="puzzle_square_width">32dp</dimen>
 </resources>
