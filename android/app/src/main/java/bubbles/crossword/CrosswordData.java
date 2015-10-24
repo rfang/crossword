@@ -75,4 +75,25 @@ public class CrosswordData {
     public void setClues(Vector<String> clues) {
         this.clues = clues;
     }
+
+    public char[] getDirections() {
+        //TODO: do this actually, and maybe save it?
+        String directions =
+               "bdddd.dddd.dddd" +
+               "a----.----.----" +
+               "a----.----d----" +
+               "a----d------..." +
+               "a--.a--...--ddd" +
+               "a--d--.bdd-.a--" +
+               "a----.b---.b---" +
+               "..a--d----d--.." +
+               "b---.a---.a--dd" +
+               "a--.b---.b-----" +
+               "a--d-...b--.a--" +
+               "...a-ddd---d---" +
+               "bdd------.a----" +
+               "a---.a---.a----" +
+               "a---.a---.a----";
+        return directions.toCharArray();
+    }
 }

@@ -14,7 +14,7 @@ public class PuzzleActivity extends ActionBarActivity {
         setContentView(R.layout.puzzle_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PuzzleFragment())
+                    .add(R.id.grid_container, new PuzzleFragment())
                     .commit();
         }
     }
