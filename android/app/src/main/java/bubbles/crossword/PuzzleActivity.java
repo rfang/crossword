@@ -15,6 +15,7 @@ public class PuzzleActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.grid_container, new PuzzleFragment())
+                    .add(R.id.clues_container, new CluesFragment())
                     .commit();
         }
     }
