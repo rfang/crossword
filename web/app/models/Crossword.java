@@ -1,7 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import play.libs.F;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.BufferedReader;
@@ -16,11 +20,15 @@ public class Crossword extends Model {
 
     public static Finder<Long, Crossword> find = new Finder<>(Crossword.class);
     public final String url;
-    public final char width;
-    public final char height;
+    public final int width;
+    public final int height;
+    @Column(columnDefinition = "TEXT")
     public final String solution;
+    @Column(columnDefinition = "TEXT")
     public final String fill;
-    public final ArrayList<String> clues = new ArrayList<>();
+    @JsonIgnore
+    @Column(columnDefinition = "TEXT")
+    public final String clues;
     @Id
     public Long id;
 
@@ -39,11 +47,13 @@ public class Crossword extends Model {
         line = line.split("\0", 2)[1];
         line = line.split("\0", 2)[1];
         line = line.split("\0", 2)[1];
+        ArrayList<String> clues = new ArrayList<>();
         for (int i = 0; i < numClues; i++) {
             String[] split = line.split("\0", 2);
             clues.add(split[0]);
             line = split[1];
         }
+        this.clues = String.join(";", clues);
     }
 
     private String load() {
@@ -56,4 +66,38 @@ public class Crossword extends Model {
         }
         return line;
     }
+
+    @JsonProperty("across")
+    public ArrayList<String> getAcross() {
+        return number()._1;
+    }
+
+    @JsonProperty("down")
+    public ArrayList<String> getDown() {
+        return number()._2;
+    }
+
+    private F.Tuple<ArrayList<String>, ArrayList<String>> number() {
+        ArrayList<String> across = new ArrayList<>(), down = new ArrayList<>();
+
+        int c = 0;
+        String[] clues = this.clues.split(";");
+        for (int i = 0; i < solution.length(); i++) {
+            if (solution.charAt(i) != '.') {
+                boolean isAcross = (i % width == 0) || (solution.charAt(i - 1) == '.');
+                if (isAcross) {
+                    across.add(clues[c]);
+                    c += 1;
+                }
+                boolean isDown = (i % height == 0) || (i > width && solution.charAt(i - width) == '.');
+                if (isDown) {
+                    down.add(clues[c]);
+                    c += 1;
+                }
+            }
+        }
+
+        return new F.Tuple<>(across, down);
+    }
+
 }
