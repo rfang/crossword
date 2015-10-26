@@ -3,7 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index(url: String ?= "https://github.com/alexdej/puzpy/raw/master/testfiles/nyt_partlyfilled.puz")
+GET     /crosswords                 controllers.Application.list()
+POST    /crosswords                 controllers.Application.create()
+GET     /crosswords/:id             controllers.Application.show(id: Long)
+GET     /crosswords/:id/fill        controllers.Application.show_fill(id: Long)
+PUT     /crosswords/:id/fill        controllers.Application.update_fill(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
