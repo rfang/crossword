@@ -19,20 +19,22 @@ import java.util.ArrayList;
 public class Crossword extends Model {
 
     public static Finder<Long, Crossword> find = new Finder<>(Crossword.class);
+    public final String name;
     public final String url;
     public final int width;
     public final int height;
     @Column(columnDefinition = "TEXT")
     public final String solution;
-    @Column(columnDefinition = "TEXT")
-    public final String fill;
     @JsonIgnore
     @Column(columnDefinition = "TEXT")
     public final String clues;
+    @Column(columnDefinition = "TEXT")
+    public String fill;
     @Id
     public Long id;
 
-    public Crossword(String url) {
+    public Crossword(String name, String url) {
+        this.name = name;
         this.url = url;
         String line = load();
         line = line.substring(line.indexOf("ACROSS&DOWN") - 2);
